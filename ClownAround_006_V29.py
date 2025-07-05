@@ -462,10 +462,10 @@ while True:
         #    AudioTime=0
         #    AudioPlaying=0
         #    GameState=7
-            
+			
         if(DoorStatus.value==True and ExitBool==0):
             ExitBool=1
-            
+			
         if(ExitBool==1):
             #CountDownAudio.stop()
             #Channel1.stop()
@@ -481,7 +481,7 @@ while True:
             Channel1.unpause()
 			
         RadioLight.value=1
-        
+		
         if LastSelectionBool==0:
             ExternalSpeakerSelection.set_value(0)
             InternalSpeakerSelection.set_value(1)
@@ -499,21 +499,21 @@ while True:
             RadioSpeakerSelection.set_value(0)
             AtticSpeakerSelection.set_value(0)
 			
-        
+		
         if (time.time()-AudioTime)>=(1+CountDownLength): # Play and loop countdown music
             CountDownAudio.stop()
             Channel1.play(CountDownAudio)
             AudioTime=time.time()
-        
+		
         if((time.time()-GameStartTime) >= (MinuteTicker*60)) and MinuteTicker<6: # Every 60 seconds trigger the time warning
             MinuteTicker+=1
-    
+			
             if MinuteTicker==5:
                 #Channel1.pause()
                 #TimeWarningAudio.play()
                 time.sleep(1)#TimeWarningLength)
                 #Channel1.unpause()
-    
+			
             elif MinuteTicker==6: # After 5 minutes trigger lose gamestate
                 ExternalSpeakerSelection.set_value(0)
                 InternalSpeakerSelection.set_value(0)
@@ -526,127 +526,128 @@ while True:
             HintLight.value=1
         else:
             HintLight.value=0
-        
-        if(HintButton.value==False and HintPlaying==False):
+		
+        if(HintButton.value==False and HintPlaying==False and HintCount<3):
             HintPlaying=True
             HintCount=HintCount+1
             time.sleep(0.3)
 			
         if(HintPlaying==True):
             Channel1.pause()
-            if(Hint1Bool==False and Hint2Bool==False and Hint3Bool==False):#HintCount==1 and Hint1Bool==0):
+            
+            # First hint press
+            if(HintCount==1 and Hint1Bool==False):
                 if(HintAudioPlaying==False):
-                    
                     Channel1.pause()
                     Channel2.play(Hint1Audio)
-                    #Hint1Audio.play()
                     HintAudioStart=time.time()
                     HintAudioPlaying=True
                 elif(HintAudioPlaying==True):
-                    Channel1.pause()
-                    if((time.time()-29)>=HintAudioStart):
+                    if((time.time()-HintAudioStart)>=Hint1Length):
                         Channel1.unpause()
                         GameDuration=GameDuration+Hint1Length
                         Hint1Bool=True
                         HintPlaying=False
                         HintAudioPlaying=False
 
-            elif(Hint1Bool==True and Hint2Bool==False and Hint3Bool==True):#HintCount==2 and Hint2Bool==0):
+            # Second hint press  
+            elif(HintCount==2 and Hint1Bool==True and Hint2Bool==False):
                 if(HintAudioPlaying==False):
                     Channel1.pause()
                     Channel2.play(Hint2Audio)
                     HintAudioStart=time.time()
                     HintAudioPlaying=True
                 elif(HintAudioPlaying==True):
-                    if((time.time()-5)>=HintAudioStart):
+                    if((time.time()-HintAudioStart)>=Hint2Length):
                         Channel1.unpause()
                         GameDuration=GameDuration+Hint2Length
                         Hint2Bool=True
                         HintPlaying=False
                         HintAudioPlaying=False
-				
-            elif(Hint1Bool==True and Hint2Bool==True and Hint3Bool==False):#HintCount==3 and Hint3Bool==0):
+
+            # Third hint press
+            elif(HintCount==3 and Hint1Bool==True and Hint2Bool==True and Hint3Bool==False):
                 if(HintAudioPlaying==False):
                     Channel1.pause()
                     Channel2.play(Hint3Audio)
                     HintAudioStart=time.time()
                     HintAudioPlaying=True
                 elif(HintAudioPlaying==True):
-                    if((time.time()-29)>=HintAudioStart):
+                    if((time.time()-HintAudioStart)>=Hint3Length):
                         Channel1.unpause()
-                        GameDuration=GameDuration+Hint1Length
+                        GameDuration=GameDuration+Hint3Length
                         Hint3Bool=True
                         HintPlaying=False
                         HintAudioPlaying=False
 
 				
         ClownSelectionQuantity=Clown1Status+Clown2Status+Clown3Status+Clown4Status+Clown5Status+Clown6Status+Clown7Status+Clown8Status+ClownKillerStatus # calculate number of selected clowns
-        
+		
         # handler for tracking clown 1 selection
         if Clown1ButtonStatus==True and Clown1Button.value==False: 
             Clown1Status = not Clown1Status
             Clown1ButtonStatus=Clown1Button.value
-            
+			
         elif Clown1ButtonStatus==False and Clown1Button.value==True:
             Clown1ButtonStatus= not Clown1ButtonStatus
-        
+		
         #handler for tracking clown 2 selection
         if Clown2ButtonStatus==True and Clown2Button.value==False:
             Clown2Status= not Clown2Status
             Clown2ButtonStatus=Clown2Button.value
-            
+			
         elif Clown2ButtonStatus==False and Clown2Button.value==True:
             Clown2ButtonStatus= not Clown2ButtonStatus
-        
+		
         #handler for tracking clown 3 selection
         if Clown3ButtonStatus==True and Clown3Button.value==False:
             Clown3Status= not Clown3Status
             Clown3ButtonStatus=Clown3Button.value
         elif Clown3ButtonStatus==False and Clown3Button.value==True:
             Clown3ButtonStatus= not Clown3ButtonStatus
-        
+		
         #handler for tracking clown 4 selection
         if Clown4ButtonStatus==True and Clown4Button.value==False:
             Clown4Status= not Clown4Status
             Clown4ButtonStatus=Clown4Button.value
         elif Clown4ButtonStatus==False and Clown4Button.value==True:
             Clown4ButtonStatus= not Clown4ButtonStatus
-        
+		
         #handler for tracking clown 5 selection
         if Clown5ButtonStatus==True and Clown5Button.value==False:
             Clown5Status= not Clown5Status
             Clown5ButtonStatus=Clown5Button.value
         elif Clown5ButtonStatus==False and Clown5Button.value==True:
             Clown5ButtonStatus= not Clown5ButtonStatus
-        
+		
         #handler for tracking clown 6 selection
         if Clown6ButtonStatus==True and Clown6Button.value==False:
             Clown6Status= not Clown6Status
             Clown6ButtonStatus=Clown6Button.value
         elif Clown6ButtonStatus==False and Clown6Button.value==True:
             Clown6ButtonStatus= not Clown6ButtonStatus
-        
+		
         #handler for tracking clown 7 selection
         if Clown7ButtonStatus==True and Clown7Button.value==False:
             Clown7Status= not Clown7Status
             Clown7ButtonStatus=Clown7Button.value
         elif Clown7ButtonStatus==False and Clown7Button.value==True:
             Clown7ButtonStatus= not Clown7ButtonStatus
-        
+		
         #handler for tracking clown 8 selection
         if Clown8ButtonStatus==True and Clown8Button.value==False:
             Clown8Status= not Clown8Status
             Clown8ButtonStatus=Clown8Button.value
         elif Clown8ButtonStatus==False and Clown8Button.value==True:
             Clown8ButtonStatus= not Clown8ButtonStatus
-        
+		
         #handler for tracking clown killer selection
         if ClownKillerButtonStatus==True and ClownKillerButton.value==False:
             ClownKillerStatus= not ClownKillerStatus
             ClownKillerButtonStatus=ClownKillerButton.value
         elif ClownKillerButtonStatus==False and ClownKillerButton.value==True:
             ClownKillerButtonStatus= not ClownKillerButtonStatus    
-        
+		
         if ClownSelectionQuantity < 8: # if less than 8 clowns selected handle like normal
             Clown1Light.value =Clown1Status
             Clown2Light.value=Clown2Status
@@ -657,13 +658,13 @@ while True:
             Clown7Light.value=Clown7Status
             Clown8Light.value=Clown8Status
             ClownKillerLight.value=ClownKillerStatus
-            
+			
             WinSelector=0
             LastSelectionBool=0
             LastSelectionAudio.stop()
-        
+		
         elif ClownSelectionQuantity==8: # if 8 clowns are selected blink the last selection 
-            
+			
             if WinSelector==0:
                 if Clown1Status==0:
                     ClownSelection=1
@@ -697,7 +698,7 @@ while True:
                     
                 WinSelector=1
                 BlinkCount=1
-                
+				
             if LastSelectionBool==0:
                 LastSelectionBool=1
                 LastSelectionPlayStart=time.time()
@@ -708,52 +709,52 @@ while True:
                 ChannelTime=time.time()
 				         
 				         
-            
+			
             if ClownSelection==1:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown1Light.value= not Clown1Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==2:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown2Light.value= not Clown2Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==3:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown3Light.value= not Clown3Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==4:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown4Light.value= not Clown4Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==5:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown5Light.value= not Clown5Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==6:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown6Light.value= not Clown6Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==7:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown7Light.value= not Clown7Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==8:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     Clown8Light.value= not Clown8Light.value
                     BlinkCount+=1
-                    
+				
             elif ClownSelection==9:
                 if (time.time()-BlinkStartTime)>= (BlinkCount*BlinkTime) :
                     ClownKillerLight.value= not ClownKillerLight.value
                     BlinkCount+=1
-                
+				
         elif ClownSelectionQuantity==9: # the last killer was selected figure out if it was the right on clown 9 and trigger win if 9 or lose
                 if ClownSelection==1:
                     Clown1Light.value=1
@@ -871,7 +872,7 @@ while True:
                     ClownKillerLight.value=1
                     
                     GameState=5
-        
+		
     elif GameState==5:
         GameIndicatorLight.value=1
         HintLight.value=0
@@ -897,16 +898,16 @@ while True:
         Clown7Light.value=0
         Clown8Light.value=0
         ClownKillerLight.value=0
-        
+		
         DoorLock.value=False
-        
+		
         ExternalSpeakerSelection.set_value(0)
         InternalSpeakerSelection.set_value(0)
         RadioSpeakerSelection.set_value(0)
         AtticSpeakerSelection.set_value(1)
         CountDownAudio.stop()
         LastSelectionAudio.stop()
-        
+		
         if EndGameState==0:
             time.sleep(1)
             EndGameState=1
@@ -916,7 +917,7 @@ while True:
                 AudioPlaying=1
                 AtticOpenStart=time.time()
                 AudioTime=time.time()
-                
+				
             
                 #WinAudio.play()
                 #AtticLighting.value=1
@@ -924,16 +925,16 @@ while True:
                 MotorControl2.set_value(1)
             #AtticOpenStart=time.time()
             #AudioTime=time.time()
-            
+			
             if AtticOpenStart>0 and((time.time()-AtticOpenStart)>=1.5):
                 WinAudio.play()
                 AtticLighting.value=1
-            
+			
             if AtticOpenStart> 0 and ((time.time()-AtticOpenStart)>=MotorOpenTime):
                 MotorControl1.set_value(0)
                 MotorControl2.set_value(0)
                 EndGameState=2
-                    
+					
                     #(EndGameState)
 			      
         elif EndGameState==2:
@@ -943,7 +944,7 @@ while True:
 			      
         elif EndGameState==3:
             AtticLighting.value=0
-            
+			
             if LimitSwitch.get_value()==0:
                     time.sleep(3)
                     MotorControl1.set_value(0)
@@ -952,7 +953,7 @@ while True:
             else :
                     MotorControl1.set_value(1)
                     MotorControl2.set_value(0)
-        
+		
         if  DoorStatus.value==True: #Check if left booth by opening the door
             LeavingBooth=1
 
@@ -968,9 +969,9 @@ while True:
             DoorLock.value=True
             time.sleep(0.5)
             GameState=7
-            
+			
         GameIndicatorLight.value=1
-        
+		
         ClownSelection=0 # reset clown lights
         Clown1Status=False #0 Not Selected 1 Selected
         Clown2Status=False #0 Not Selected 1 Selected
@@ -992,16 +993,16 @@ while True:
         Clown7Light.value=0
         Clown8Light.value=0
         ClownKillerLight.value=0
-        
+		
         DoorLock.value=False
-        
+		
         ExternalSpeakerSelection.set_value(0)
         InternalSpeakerSelection.set_value(0)
         RadioSpeakerSelection.set_value(0)
         AtticSpeakerSelection.set_value(1)
         CountDownAudio.stop()
         LastSelectionAudio.stop()
-        
+		
         if EndGameState==0:
             time.sleep(1)
             EndGameState=1
@@ -1009,25 +1010,25 @@ while True:
         elif EndGameState==1:
 			      
             #AtticLighting.value=1
-            
+			
             if AudioPlaying==0:
                     #LoseAudio.play()
                     AudioPlaying=1
                     AtticOpenStart=time.time()
                     #AudioTime=time.time()
-                    
+					
             MotorControl1.set_value(0)
             MotorControl2.set_value(1)
             #AtticOpenStart=time.time()
             #AudioTime=time.time()
             #(AtticOpenStart)
             #print(AudioTime)
-            
+			
             if AtticOpenStart>0 and((time.time()-AtticOpenStart)>=1.5):
                     LoseAudio.play()
                     AtticLighting.value=1
                     AtticLighting.value=1
-            
+			
             if (AtticOpenStart>= 0) and ((time.time()-AtticOpenStart)>=MotorOpenTime):
                     MotorControl1.set_value(0)
                     MotorControl2.set_value(0)
@@ -1041,17 +1042,17 @@ while True:
 			      
         elif EndGameState==3:
             AtticLighting.value=0
-            
+			
             if LimitSwitch.get_value()==0:
                     time.sleep(3)
                     MotorControl1.set_value(0)
                     MotorControl2.set_value(0)
                     GameState=7
             else :
-                    
+					
                     MotorControl1.set_value(1)
                     MotorControl2.set_value(0)
-        
+		
         if  DoorStatus.value==True: #Check if left booth by opening the door
             LeavingBooth=1
 
@@ -1061,21 +1062,21 @@ while True:
         AtticLighting.value=0
         ExitBool=0
         HintLight.value=0
-        
+		
         if  DoorStatus.value==True: # check if leaving
             LeavingBooth=1
-            
+			
             if UnlockStartTime==0:
                 UnlockStartTime=time.time()
                 DoorLock.value=False
 
         if ((time.time()-UnlockStartTime)>=UnlockDuration) and LeavingBooth==1: # after leaving and unlock time triggered lock the door
               DoorLock.value=True
-              
-              
-              
+			  
+			  
+			  
               #time.sleep(2)
-              
+			  
               if DoorStatus.value==False:
                   GameState=0 # return to idle
                   UnlockStartTime=0 #reset variables
@@ -1091,25 +1092,25 @@ while True:
                   LeavingBooth=0
                   EndGameState=0
                   LastSelectionPlayStart=0
-                  
+				  
                   HintCount=0
                   HintPlaying=0
                   Hint1Bool=0
                   Hint2Bool=0
                   Hint3Bool=0
-                  
+				  
               elif DoorStatus.value==True:
                 if AudioPlaying==0: # play the door close audio request
                    AudioPlaying=1
                    AudioTime=time.time()
-                
+				
                    ExternalSpeakerSelection.set_value(1)
                    InternalSpeakerSelection.set_value(0)
                    RadioSpeakerSelection.set_value(0)
                    AtticSpeakerSelection.set_value(0)
-                
+				
                    playing=LeaveAudio.play()
-                
+				
                 elif AudioPlaying==1 and (time.time()-AudioTime)>= (3+LeaveAudioLength):
                    playing=LeaveAudio.play()
                    AudioTime=time.time()
