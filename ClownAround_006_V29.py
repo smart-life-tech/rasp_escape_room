@@ -483,21 +483,21 @@ while True:
         RadioLight.value=1
         
         if LastSelectionBool==0:
-			      ExternalSpeakerSelection.set_value(0)
-			      InternalSpeakerSelection.set_value(1)
-			      RadioSpeakerSelection.set_value(0)
-			      AtticSpeakerSelection.set_value(0)
+            ExternalSpeakerSelection.set_value(0)
+            InternalSpeakerSelection.set_value(1)
+            RadioSpeakerSelection.set_value(0)
+            AtticSpeakerSelection.set_value(0)
         elif LastSelectionBool==1 and time.time()-LastSelectionLength<=LastSelectionPlayStart:
-			      ExternalSpeakerSelection.set_value(0)
-			      InternalSpeakerSelection.set_value(0)
-			      RadioSpeakerSelection.set_value(1)
-			      AtticSpeakerSelection.set_value(0)
-			      RadioLight.value=1
+            ExternalSpeakerSelection.set_value(0)
+            InternalSpeakerSelection.set_value(0)
+            RadioSpeakerSelection.set_value(1)
+            AtticSpeakerSelection.set_value(0)
+            RadioLight.value=1
         else :
-			      ExternalSpeakerSelection.set_value(0)
-			      InternalSpeakerSelection.set_value(1)
-			      RadioSpeakerSelection.set_value(0)
-			      AtticSpeakerSelection.set_value(0)
+            ExternalSpeakerSelection.set_value(0)
+            InternalSpeakerSelection.set_value(1)
+            RadioSpeakerSelection.set_value(0)
+            AtticSpeakerSelection.set_value(0)
 			
         
         if (time.time()-AudioTime)>=(1+CountDownLength): # Play and loop countdown music
@@ -506,21 +506,21 @@ while True:
             AudioTime=time.time()
         
         if((time.time()-GameStartTime) >= (MinuteTicker*60)) and MinuteTicker<6: # Every 60 seconds trigger the time warning
-			      MinuteTicker+=1
-			
-			      if MinuteTicker==5:
-				      #Channel1.pause()
-				      #TimeWarningAudio.play()
-				      time.sleep(1)#TimeWarningLength)
-				      #Channel1.unpause()
-            
-			      elif MinuteTicker==6: # After 5 minutes trigger lose gamestate
-				      ExternalSpeakerSelection.set_value(0)
-				      InternalSpeakerSelection.set_value(0)
-				      RadioSpeakerSelection.set_value(0)
-				      AtticSpeakerSelection.set_value(0)
-				      GameState=6
-				      MinuteTicker=1
+            MinuteTicker+=1
+    
+            if MinuteTicker==5:
+                #Channel1.pause()
+                #TimeWarningAudio.play()
+                time.sleep(1)#TimeWarningLength)
+                #Channel1.unpause()
+    
+            elif MinuteTicker==6: # After 5 minutes trigger lose gamestate
+                ExternalSpeakerSelection.set_value(0)
+                InternalSpeakerSelection.set_value(0)
+                RadioSpeakerSelection.set_value(0)
+                AtticSpeakerSelection.set_value(0)
+                GameState=6
+                MinuteTicker=1
 				      
         if(HintCount<3):
             HintLight.value=1
@@ -699,13 +699,13 @@ while True:
                 BlinkCount=1
                 
             if LastSelectionBool==0:
-				         LastSelectionBool=1
-				         LastSelectionPlayStart=time.time()
-				         #CountDownAudio.pause()
-				         Channel1.pause()
-				         LastSelectionAudio.play()
-				         #time.sleep(LastSelectionLength)
-				         ChannelTime=time.time()
+                LastSelectionBool=1
+                LastSelectionPlayStart=time.time()
+                #CountDownAudio.pause()
+                Channel1.pause()
+                LastSelectionAudio.play()
+                #time.sleep(LastSelectionLength)
+                ChannelTime=time.time()
 				         
 				         
             
@@ -908,54 +908,50 @@ while True:
         LastSelectionAudio.stop()
         
         if EndGameState==0:
-			      time.sleep(1)
-			      EndGameState=1
-        elif EndGameState==1:
-			      
-			      
-			      
-			      
-			      if AudioPlaying==0:
+            time.sleep(1)
+            EndGameState=1
+        elif EndGameState==1:			      
+            if AudioPlaying==0:
 
-					     AudioPlaying=1
-					     AtticOpenStart=time.time()
-					     AudioTime=time.time()
-					     
-					    
-					     #WinAudio.play()
-					     #AtticLighting.value=1
-					     MotorControl1.set_value(0)
-					     MotorControl2.set_value(1)
-			      #AtticOpenStart=time.time()
-			      #AudioTime=time.time()
-			      
-			      if AtticOpenStart>0 and((time.time()-AtticOpenStart)>=1.5):
-					     WinAudio.play()
-					     AtticLighting.value=1
-			      
-			      if AtticOpenStart> 0 and ((time.time()-AtticOpenStart)>=MotorOpenTime):
-					     MotorControl1.set_value(0)
-					     MotorControl2.set_value(0)
-					     EndGameState=2
-					     
-					     #(EndGameState)
+                AudioPlaying=1
+                AtticOpenStart=time.time()
+                AudioTime=time.time()
+                
+            
+                #WinAudio.play()
+                #AtticLighting.value=1
+                MotorControl1.set_value(0)
+                MotorControl2.set_value(1)
+            #AtticOpenStart=time.time()
+            #AudioTime=time.time()
+            
+            if AtticOpenStart>0 and((time.time()-AtticOpenStart)>=1.5):
+                WinAudio.play()
+                AtticLighting.value=1
+            
+            if AtticOpenStart> 0 and ((time.time()-AtticOpenStart)>=MotorOpenTime):
+                MotorControl1.set_value(0)
+                MotorControl2.set_value(0)
+                EndGameState=2
+                    
+                    #(EndGameState)
 			      
         elif EndGameState==2:
-			      time.sleep(3)
-			      EndGameState=3
-			      #print(EndGameState)
+            time.sleep(3)
+            EndGameState=3
+            #print(EndGameState)
 			      
         elif EndGameState==3:
-			      AtticLighting.value=0
-			      
-			      if LimitSwitch.get_value()==0:
-					     time.sleep(3)
-					     MotorControl1.set_value(0)
-					     MotorControl2.set_value(0)
-					     GameState=7
-			      else :
-					     MotorControl1.set_value(1)
-					     MotorControl2.set_value(0)
+            AtticLighting.value=0
+            
+            if LimitSwitch.get_value()==0:
+                    time.sleep(3)
+                    MotorControl1.set_value(0)
+                    MotorControl2.set_value(0)
+                    GameState=7
+            else :
+                    MotorControl1.set_value(1)
+                    MotorControl2.set_value(0)
         
         if  DoorStatus.value==True: #Check if left booth by opening the door
             LeavingBooth=1
@@ -1007,54 +1003,54 @@ while True:
         LastSelectionAudio.stop()
         
         if EndGameState==0:
-			      time.sleep(1)
-			      EndGameState=1
-			      #(EndGameState)
+            time.sleep(1)
+            EndGameState=1
+            #(EndGameState)
         elif EndGameState==1:
 			      
-			      #AtticLighting.value=1
-			      
-			      if AudioPlaying==0:
-					     #LoseAudio.play()
-					     AudioPlaying=1
-					     AtticOpenStart=time.time()
-					     #AudioTime=time.time()
-					     
-			      MotorControl1.set_value(0)
-			      MotorControl2.set_value(1)
-			      #AtticOpenStart=time.time()
-			      #AudioTime=time.time()
-			      #(AtticOpenStart)
-			      #print(AudioTime)
-			      
-			      if AtticOpenStart>0 and((time.time()-AtticOpenStart)>=1.5):
-					     LoseAudio.play()
-					     AtticLighting.value=1
-					     AtticLighting.value=1
-			      
-			      if (AtticOpenStart>= 0) and ((time.time()-AtticOpenStart)>=MotorOpenTime):
-					     MotorControl1.set_value(0)
-					     MotorControl2.set_value(0)
-					     EndGameState=2
-					     print(EndGameState)
+            #AtticLighting.value=1
+            
+            if AudioPlaying==0:
+                    #LoseAudio.play()
+                    AudioPlaying=1
+                    AtticOpenStart=time.time()
+                    #AudioTime=time.time()
+                    
+            MotorControl1.set_value(0)
+            MotorControl2.set_value(1)
+            #AtticOpenStart=time.time()
+            #AudioTime=time.time()
+            #(AtticOpenStart)
+            #print(AudioTime)
+            
+            if AtticOpenStart>0 and((time.time()-AtticOpenStart)>=1.5):
+                    LoseAudio.play()
+                    AtticLighting.value=1
+                    AtticLighting.value=1
+            
+            if (AtticOpenStart>= 0) and ((time.time()-AtticOpenStart)>=MotorOpenTime):
+                    MotorControl1.set_value(0)
+                    MotorControl2.set_value(0)
+                    EndGameState=2
+                    print(EndGameState)
 			      
         elif EndGameState==2:
-			      time.sleep(3)
-			      EndGameState=3
-			      #print(EndGameState)
+            time.sleep(3)
+            EndGameState=3
+            #print(EndGameState)
 			      
         elif EndGameState==3:
-			      AtticLighting.value=0
-			      
-			      if LimitSwitch.get_value()==0:
-					     time.sleep(3)
-					     MotorControl1.set_value(0)
-					     MotorControl2.set_value(0)
-					     GameState=7
-			      else :
-					     
-					     MotorControl1.set_value(1)
-					     MotorControl2.set_value(0)
+            AtticLighting.value=0
+            
+            if LimitSwitch.get_value()==0:
+                    time.sleep(3)
+                    MotorControl1.set_value(0)
+                    MotorControl2.set_value(0)
+                    GameState=7
+            else :
+                    
+                    MotorControl1.set_value(1)
+                    MotorControl2.set_value(0)
         
         if  DoorStatus.value==True: #Check if left booth by opening the door
             LeavingBooth=1
