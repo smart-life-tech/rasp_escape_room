@@ -1150,8 +1150,12 @@ while True:
                    playing=LeaveAudio.play()
 				
                 elif AudioPlaying==1 and (time.time()-AudioTime)>= (3+LeaveAudioLength):
-                   playing=LeaveAudio.play()
-                   AudioTime=time.time()
+                    ExternalSpeakerSelection.set_value(0)
+                    InternalSpeakerSelection.set_value(1)
+                    RadioSpeakerSelection.set_value(0)
+                    AtticSpeakerSelection.set_value(0)
+                    playing=LeaveAudio.play()
+                    AudioTime=time.time()
 				     
     else:
         GameState=0 # when in doubt return to 0 
