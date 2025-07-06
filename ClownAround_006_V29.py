@@ -381,9 +381,24 @@ while True:
     elif GameState==3: #PREGAME Game State
         GameIndicatorLight.value=1
         RadioLight.value=1
+        RedButtonLight.value=1
         DoorCloseRequestAudio.stop()
         HintLight.value=0
-        
+        if RedButton.value==False:
+            # Stop all audio
+            RulesAudio.stop()
+            pygame.mixer.stop()
+            
+            # Reset speaker selections
+            ExternalSpeakerSelection.set_value(0)
+            InternalSpeakerSelection.set_value(0)
+            RadioSpeakerSelection.set_value(0)
+            AtticSpeakerSelection.set_value(0)
+            
+            # Reset audio variables
+            AudioTime=0
+            AudioPlaying=0
+            GameState=7 # Go back to leave state
         if(DoorStatus.value==True and ExitBool==0):
             ExitBool=1
         if(ExitBool==1):
@@ -454,6 +469,7 @@ while True:
                 
     elif GameState==4: #GAMEPLAY Game State
         GameIndicatorLight.value=1
+        RedButtonLight.value=1
 		
         #if(DoorStatus.value==True):
         #    CountDownAudio.stop()
@@ -879,7 +895,7 @@ while True:
     elif GameState==5:
         GameIndicatorLight.value=1
         HintLight.value=0
-		
+        RedButtonLight.value=1
         ClownSelection=0 # reset clown lights
         Clown1Status=False #0 Not Selected 1 Selected
         Clown2Status=False #0 Not Selected 1 Selected
@@ -962,7 +978,7 @@ while True:
 
     elif GameState==6: # LOSE -> see game state 5 for comments
         HintLight.value=0
-		
+        RedButtonLight.value=1
         if(ExitBool==1):
             #CountDownAudio.stop()
             #Channel1.stop()
@@ -1015,10 +1031,10 @@ while True:
             #AtticLighting.value=1
 			
             if AudioPlaying==0:
-                    #LoseAudio.play()
-                    AudioPlaying=1
-                    AtticOpenStart=time.time()
-                    #AudioTime=time.time()
+                #LoseAudio.play()
+                AudioPlaying=1
+                AtticOpenStart=time.time()
+                #AudioTime=time.time()
 					
             MotorControl1.set_value(0)
             MotorControl2.set_value(1)
@@ -1062,6 +1078,7 @@ while True:
 
     elif GameState==7: #LEAVE State
         GameIndicatorLight.value=1
+        RedButtonLight.value=1
         AtticLighting.value=0
         ExitBool=0
         HintLight.value=0
@@ -1107,8 +1124,8 @@ while True:
                    AudioPlaying=1
                    AudioTime=time.time()
 				
-                   ExternalSpeakerSelection.set_value(1)
-                   InternalSpeakerSelection.set_value(0)
+                   ExternalSpeakerSelection.set_value(0)
+                   InternalSpeakerSelection.set_value(1)
                    RadioSpeakerSelection.set_value(0)
                    AtticSpeakerSelection.set_value(0)
 				
