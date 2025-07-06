@@ -254,7 +254,7 @@ LeavingBooth=0
 
 LastSelectionBool=0
 ExitBool=0
-
+CountdownPlay=0
 ExternalSpeakerSelection.set_value(0)
 InternalSpeakerSelection.set_value(0)
 RadioSpeakerSelection.set_value(0)
@@ -527,7 +527,9 @@ while True:
             RadioSpeakerSelection.set_value(0)
             AtticSpeakerSelection.set_value(0)
 			
-		
+	if (CountdownPlay==0):
+	    Channel1.play(CountDownAudio)
+	    CountdownPlay=1
         if (time.time()-AudioTime)>=(1+CountDownLength): # Play and loop countdown music
             CountDownAudio.stop()
             Channel1.play(CountDownAudio)
@@ -1133,7 +1135,7 @@ while True:
                   LeavingBooth=0
                   EndGameState=0
                   LastSelectionPlayStart=0
-				  
+	          CountdownPlay=0
                   HintCount=0
                   HintPlaying=0
                   Hint1Bool=0
