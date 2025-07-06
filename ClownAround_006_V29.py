@@ -388,7 +388,8 @@ while True:
             # Stop all audio
             RulesAudio.stop()
             pygame.mixer.stop()
-            
+            Channel1.stop()
+            Channel2.stop()
             # Reset speaker selections
             ExternalSpeakerSelection.set_value(0)
             InternalSpeakerSelection.set_value(0)
@@ -398,11 +399,22 @@ while True:
             # Reset audio variables
             AudioTime=0
             AudioPlaying=0
+            # Turn off interior lighting
+            InteriorLighting.value=0
+            RadioLight.value=0
             GameState=7 # Go back to leave state
         if(DoorStatus.value==True and ExitBool==0):
             ExitBool=1
         if(ExitBool==1):
             RulesAudio.stop()
+            pygame.mixer.stop()
+            Channel1.stop()
+            Channel2.stop()
+            # Reset speakers
+            ExternalSpeakerSelection.set_value(0)
+            InternalSpeakerSelection.set_value(0)
+            RadioSpeakerSelection.set_value(0)
+            AtticSpeakerSelection.set_value(0)
             #Channel1.stop()
             #playing.stop()
             AudioTime=0
@@ -410,7 +422,7 @@ while True:
             DoorLock.value=True
             time.sleep(0.5)
             GameState=6
-
+            continue  # Skip rest of logic
         
         if AudioPlaying==0: # play the rules audio
             
@@ -1082,7 +1094,13 @@ while True:
         AtticLighting.value=0
         ExitBool=0
         HintLight.value=0
-		
+        if AudioPlaying==0:
+            #Stop any lingering audio
+            pygame.mixer.stop()
+            Channel1.stop()
+            Channel2.stop()
+            RulesAudio.stop()
+            CountDownAudio.stop()
         if  DoorStatus.value==True: # check if leaving
             LeavingBooth=1
 			
