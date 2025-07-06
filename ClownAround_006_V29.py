@@ -572,9 +572,10 @@ while True:
                     HintAudioPlaying=True
                 elif(HintAudioPlaying==True):
                     if((time.time()-HintAudioStart)>=Hint1Length):
-                        Channel1.play(CountDownAudio)  # Restart countdown
-                        AudioTime=time.time()  # Reset audio timer
-                        GameDuration=GameDuration+Hint1Length
+                        #Channel1.play(CountDownAudio)  # Restart countdown
+                        Channel1.unpause()
+                        #AudioTime=time.time()  # Reset audio timer
+                        #GameDuration=GameDuration+Hint1Length
                         Hint1Bool=True
                         HintPlaying=False
                         HintAudioPlaying=False
@@ -588,9 +589,10 @@ while True:
                     HintAudioPlaying=True
                 elif(HintAudioPlaying==True):
                     if((time.time()-HintAudioStart)>=Hint2Length):
-                        Channel1.play(CountDownAudio)  # Restart countdown
-                        AudioTime=time.time()  # Reset audio timer
-                        GameDuration=GameDuration+Hint2Length
+                        Channel1.unpause() 
+                        #Channel1.play(CountDownAudio)  # Restart countdown
+                        #AudioTime=time.time()  # Reset audio timer
+                        #GameDuration=GameDuration+Hint2Length
                         Hint2Bool=True
                         HintPlaying=False
                         HintAudioPlaying=False
@@ -604,9 +606,10 @@ while True:
                     HintAudioPlaying=True
                 elif(HintAudioPlaying==True):
                     if((time.time()-HintAudioStart)>=Hint3Length):
-                        Channel1.play(CountDownAudio)  # Restart countdown
-                        AudioTime=time.time()  # Reset audio timer
-                        GameDuration=GameDuration+Hint3Length
+                        Channel1.unpause() 
+                        #Channel1.play(CountDownAudio)  # Restart countdown
+                        #AudioTime=time.time()  # Reset audio timer
+                        #GameDuration=GameDuration+Hint3Length
                         Hint3Bool=True
                         HintPlaying=False
                         HintAudioPlaying=False
