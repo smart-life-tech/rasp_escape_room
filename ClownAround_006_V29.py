@@ -568,7 +568,7 @@ while True:
             # First hint press
             if(HintCount==1 and Hint1Bool==False):
                 if(HintAudioPlaying==False):
-                    Channel1.stop()
+                    Channel1.pause()
                     Channel2.play(Hint1Audio)
                     HintAudioStart=time.time()
                     HintAudioPlaying=True
@@ -585,7 +585,7 @@ while True:
             # Second hint press  
             elif(HintCount==2 and Hint1Bool==True and Hint2Bool==False):
                 if(HintAudioPlaying==False):
-                    Channel1.stop()
+                    Channel1.pause()
                     Channel2.play(Hint2Audio)
                     HintAudioStart=time.time()
                     HintAudioPlaying=True
@@ -602,7 +602,7 @@ while True:
             # Third hint press
             elif(HintCount==3 and Hint1Bool==True and Hint2Bool==True and Hint3Bool==False):
                 if(HintAudioPlaying==False):
-                    Channel1.stop()
+                    Channel1.pause()
                     Channel2.play(Hint3Audio)
                     HintAudioStart=time.time()
                     HintAudioPlaying=True
